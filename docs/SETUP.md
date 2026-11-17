@@ -51,8 +51,16 @@ The sheet's columns are: **A** Date (date + time), **B** Amount ($), **C** Payme
 ```
 
 Creates `D:\AndroidDev\keys\release.keystore` and its password (encrypted for your Windows user) in
-`release-pass.dat`. **Back up `D:\AndroidDev\keys` somewhere off the laptop.** Every version must be
-signed with this key; losing it means uninstalling the app to install a newer one.
+`release-pass.dat`. Every version must be signed with this key; losing it means uninstalling the app to
+install a newer one. Back it up with:
+
+```powershell
+.\backup-keys.ps1
+```
+
+This uploads `release.keystore`, its password (plain text) and `RESTORE.txt` (how to set up a new laptop)
+to the OneDrive folder `ExpenseLog-keys-backup`, then checks the upload. `release-pass.dat` itself only
+works for your Windows user on this laptop, which is why the password is backed up separately.
 
 ## 5. Laptop sign-in for publishing (once)
 

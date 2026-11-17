@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- #60: glass switch knob: a bright bead with a soft rim; it stretches a little while pressed. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <inset android:inset="1dp">
+            <shape android:shape="oval">
+                <size android:width="32dp" android:height="28dp" />
+                <gradient android:type="radial" android:gradientRadius="20dp" android:startColor="#FFFFFFFF" android:endColor="#FFDDE6F0" />
+                <stroke android:width="1dp" android:color="#33000000" />
+            </shape>
+        </inset>
+    </item>
+    <item>
+        <inset android:inset="3dp">
+            <shape android:shape="oval">
+                <size android:width="24dp" android:height="24dp" />
+                <gradient android:type="radial" android:gradientRadius="16dp" android:startColor="#FFFFFFFF" android:endColor="#FFDDE6F0" />
+                <stroke android:width="1dp" android:color="#33000000" />
+            </shape>
+        </inset>
+    </item>
+</selector>

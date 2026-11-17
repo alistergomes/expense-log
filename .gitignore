@@ -1,0 +1,23 @@
+# Build output
+.gradle/
+build/
+*.apk
+*.aab
+
+# Personal settings (Microsoft app ID, Excel file ID, SDK path): see local.properties.example
+local.properties
+
+# Signing keys and tokens never live in the repo (they're in D:\AndroidDev\keys), but just in case
+*.keystore
+*.jks
+*.dat
+
+# Screenshots and logs can show real payments
+*.png
+!app/src/main/res/**/*.png
+UPDATE-FAILURES.md
+
+# Editors
+.idea/
+*.iml
+.vscode/

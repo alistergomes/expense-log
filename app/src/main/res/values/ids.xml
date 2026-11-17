@@ -1,0 +1,4 @@
+<resources>
+    <item name="countTag" type="id" />
+    <item name="widthTag" type="id" />
+</resources>

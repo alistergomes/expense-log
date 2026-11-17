@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Expense Log</string>
+    <string name="settings">Settings</string>
+    <string name="widget_desc">Detected payments with add and ignore buttons</string>
+    <string name="sc_detected">Detected</string>
+    <string name="sc_voice">Say a payment</string>
+    <string name="sc_receipt">Receipt photo</string>
+    <string name="sc_monitor">Pause or resume monitor</string>
+</resources>

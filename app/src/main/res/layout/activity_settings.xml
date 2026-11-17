@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.expenselog.app.AuroraView
+        android:id="@+id/aurora"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <!-- Switches -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/monitorSwitch"
+                    style="@style/Toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Monitor payment notifications" />
+
+                <Switch
+                    android:id="@+id/alertSwitch"
+                    style="@style/Toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notify me when one is detected" />
+
+                <Switch
+                    android:id="@+id/lightSwitch"
+                    style="@style/Toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Light mode" />
+            </com.expenselog.app.GlassCard>
+
+            <Button
+                android:id="@+id/manageBtn"
+                style="@style/Glass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="16dp"
+                android:text="Cards &amp; merchants the app has learned  ›" />
+
+            <!-- Backup -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Backup" />
+
+                <TextView
+                    android:id="@+id/backupStatus"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Saves settings, learned cards and merchants, and the Detected list to your OneDrive. Sign-in isn't included."
+                    android:textIsSelectable="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/backupBtn"
+                        style="@style/Glass"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Back up" />
+
+                    <Button
+                        android:id="@+id/restoreBtn"
+                        style="@style/Glass"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:text="Restore" />
+                </LinearLayout>
+            </com.expenselog.app.GlassCard>
+
+            <!-- App updates -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App updates" />
+
+                <TextView
+                    android:id="@+id/updateStatus"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true" />
+
+                <Switch
+                    android:id="@+id/autoUpdateSwitch"
+                    style="@style/Toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Update automatically" />
+
+                <Button
+                    android:id="@+id/reopenBtn"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/updateBtn"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check for updates" />
+            </com.expenselog.app.GlassCard>
+
+            <!-- Microsoft -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1. Microsoft account" />
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App (client) ID" />
+
+                <EditText
+                    android:id="@+id/clientId"
+                    style="@style/Field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions|textVisiblePassword"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/account"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/signIn"
+                        style="@style/Glass"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Sign in" />
+
+                    <Button
+                        android:id="@+id/signOut"
+                        style="@style/Glass"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:text="Sign out" />
+                </LinearLayout>
+            </com.expenselog.app.GlassCard>
+
+            <!-- Excel file -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. Excel file" />
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="File ID (resid in the web link)" />
+
+                <EditText
+                    android:id="@+id/itemId"
+                    style="@style/Field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions|textVisiblePassword" />
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="…or find it by file name" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/fileName"
+                        style="@style/Field"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:importantForAutofill="no"
+                        android:inputType="text" />
+
+                    <Button
+                        android:id="@+id/findFile"
+                        style="@style/Pill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Find" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sheet (tab) name" />
+
+                <EditText
+                    android:id="@+id/sheet"
+                    style="@style/Field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/test"
+                    style="@style/Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Test connection" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/status"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textIsSelectable="true" />
+            </com.expenselog.app.GlassCard>
+
+            <!-- Payment detection -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3. Payment detection" />
+
+                <TextView
+                    android:id="@+id/detectStatus"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp" />
+
+                <Button
+                    android:id="@+id/notifAccess"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="a. Allow notification access" />
+
+                <Button
+                    android:id="@+id/appInfo"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Greyed out? Open app info" />
+
+                <Button
+                    android:id="@+id/chooseApps"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="b. Choose apps to watch" />
+
+                <Button
+                    android:id="@+id/battery"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="c. Battery: don't optimise" />
+            </com.expenselog.app.GlassCard>
+
+            <!-- Test notification -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test notification" />
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Message to simulate" />
+
+                <EditText
+                    android:id="@+id/testText"
+                    style="@style/Field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Paste or type a bank message"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:minLines="3"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/testDefault"
+                        style="@style/Pill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="52dp"
+                        android:text="Use default" />
+
+                    <Button
+                        android:id="@+id/testNotif"
+                        style="@style/Primary"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:text="Send test" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/testStatus"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textIsSelectable="true" />
+            </com.expenselog.app.GlassCard>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.expenselog.app.BlurBar
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/back"
+                style="@style/Pill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="‹ Back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:text="Settings"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:maxLines="1"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.expenselog.app.BlurBar>
+</FrameLayout>

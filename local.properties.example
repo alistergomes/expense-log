@@ -1,0 +1,10 @@
+# Copy to local.properties and fill in. This file is not uploaded (it's in .gitignore).
+# Where the Android SDK is installed.
+sdk.dir=D\:\AndroidDev\sdk
+# Your Microsoft "Expense Log" app registration (Application / client ID). See docs/SETUP.md.
+expenselog.clientId=00000000-0000-0000-0000-000000000000
+# Default Excel file and sheet. The file ID is the resid= value in the file's OneDrive web link
+# (it can also be found from the app's Settings > Find).
+expenselog.itemId=
+expenselog.fileName=Payments
+expenselog.sheet=Expenditures

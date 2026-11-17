@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- #70: the app icon draws itself on the splash screen: four ledger lines, then the plus. -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+            <path android:name="l1" android:pathData="M37,39 L71,39" android:strokeColor="#FFFFFF" android:strokeWidth="6" android:strokeLineCap="round" android:trimPathEnd="0" />
+            <path android:name="l2" android:pathData="M37,49 L71,49" android:strokeColor="#FFFFFF" android:strokeWidth="6" android:strokeLineCap="round" android:trimPathEnd="0" />
+            <path android:name="l3" android:pathData="M37,59 L53,59" android:strokeColor="#FFFFFF" android:strokeWidth="6" android:strokeLineCap="round" android:trimPathEnd="0" />
+            <path android:name="l4" android:pathData="M37,69 L53,69" android:strokeColor="#FFFFFF" android:strokeWidth="6" android:strokeLineCap="round" android:trimPathEnd="0" />
+            <path android:name="plus" android:pathData="M67,58 L67,74 M59,66 L75,66" android:strokeColor="#34D399" android:strokeWidth="4" android:strokeLineCap="round" android:trimPathEnd="0" />
+        </vector>
+    </aapt:attr>
+    <target android:name="l1">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="trimPathEnd" android:valueFrom="0" android:valueTo="1" android:duration="220" android:interpolator="@android:interpolator/decelerate_cubic" />
+        </aapt:attr>
+    </target>
+    <target android:name="l2">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="trimPathEnd" android:valueFrom="0" android:valueTo="1" android:startOffset="90" android:duration="220" android:interpolator="@android:interpolator/decelerate_cubic" />
+        </aapt:attr>
+    </target>
+    <target android:name="l3">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="trimPathEnd" android:valueFrom="0" android:valueTo="1" android:startOffset="180" android:duration="200" android:interpolator="@android:interpolator/decelerate_cubic" />
+        </aapt:attr>
+    </target>
+    <target android:name="l4">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="trimPathEnd" android:valueFrom="0" android:valueTo="1" android:startOffset="260" android:duration="200" android:interpolator="@android:interpolator/decelerate_cubic" />
+        </aapt:attr>
+    </target>
+    <target android:name="plus">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="trimPathEnd" android:valueFrom="0" android:valueTo="1" android:startOffset="380" android:duration="260" android:interpolator="@android:interpolator/overshoot" />
+        </aapt:attr>
+    </target>
+</animated-vector>

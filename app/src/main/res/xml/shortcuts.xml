@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- #44: long-press the app icon. Each opens the main screen, which then goes where the shortcut says. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:icon="@drawable/ic_stat"
+        android:shortcutId="detected"
+        android:shortcutLongLabel="@string/sc_detected"
+        android:shortcutShortLabel="@string/sc_detected">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.expenselog.app.MainActivity"
+            android:targetPackage="com.expenselog.app">
+            <extra android:name="open" android:value="detected" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:icon="@drawable/ic_stat"
+        android:shortcutId="voice"
+        android:shortcutLongLabel="@string/sc_voice"
+        android:shortcutShortLabel="@string/sc_voice">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.expenselog.app.MainActivity"
+            android:targetPackage="com.expenselog.app">
+            <extra android:name="open" android:value="voice" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:icon="@drawable/ic_stat"
+        android:shortcutId="receipt"
+        android:shortcutLongLabel="@string/sc_receipt"
+        android:shortcutShortLabel="@string/sc_receipt">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.expenselog.app.MainActivity"
+            android:targetPackage="com.expenselog.app">
+            <extra android:name="open" android:value="receipt" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:icon="@drawable/ic_stat"
+        android:shortcutId="monitor"
+        android:shortcutLongLabel="@string/sc_monitor"
+        android:shortcutShortLabel="@string/sc_monitor">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.expenselog.app.MainActivity"
+            android:targetPackage="com.expenselog.app">
+            <extra android:name="open" android:value="monitor" />
+        </intent>
+    </shortcut>
+</shortcuts>

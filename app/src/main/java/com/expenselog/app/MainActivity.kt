@@ -304,7 +304,6 @@ class MainActivity : Activity() {
         val waiting = all.size
         val queued = all.count { it.queued }
         val show = waiting > 0 && pending == null
-        findViewById<AuroraView>(R.id.aurora).setWaiting(waiting > 0) // amber while payments wait (#69)
         pendingBtn.text = (if (waiting == 1) "1 detected payment to review" else "$waiting detected payments to review") +
             (if (queued > 0) " ($queued waiting for internet)" else "") + "  ›"
         if (show && pendingBtn.visibility != View.VISIBLE) {

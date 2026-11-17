@@ -387,15 +387,11 @@ class AuroraView(context: Context, attrs: AttributeSet?) : View(context, attrs) 
         val h = height.toFloat()
         canvas.drawColor(base)
         val now = System.currentTimeMillis()
-        // Pull toward the finger, easing back over 3 seconds after it lifts.
-        val pull = (1f - (now - touchAt) / 3000f).coerceIn(0f, 1f) * 0.35f
+        // The glows drift slowly and identically on every screen. (They used to be pulled toward the finger,
+        // which made colours swing around while scrolling, so that was removed.)
         for (b in blobs) {
-            var cx = w * (b.x + 0.12f * sin(t * b.speed + b.phase))
-            var cy = h * (b.y + 0.08f * cos(t * b.speed + b.phase))
-            if (pull > 0f) {
-                cx += (touchX - cx) * pull
-                cy += (touchY - cy) * pull
-            }
+            val cx = w * (b.x + 0.12f * sin(t * b.speed + b.phase))
+            val cy = h * (b.y + 0.08f * cos(t * b.speed + b.phase))
             canvas.save()
             canvas.translate(cx, cy)
             canvas.drawCircle(0f, 0f, b.r, b.paint)

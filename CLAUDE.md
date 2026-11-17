@@ -15,9 +15,13 @@ anything hard to undo, and report results honestly (what was tested on the phone
 
 - **No cost.** Never create Azure resources, change the Azure subscription, or use any paid Microsoft
   service. The app needs only the free Entra app registration and Microsoft Graph with a personal account.
-- **Release only through `build.ps1`** with the phone on USB. The phone installs whatever is published by
-  itself, so a build that crashes on start breaks the app. `-PublishUntested` only for trivial changes, and
-  say so. Raise `versionCode` above everything ever published (rollbacks use `published + 1`).
+- **Release only through `build.ps1`.** Since 2026-11-17 the owner releases **without the USB cable**:
+  `build.ps1` runs the tests and the signed build, then publishes straight to OneDrive; the phone installs it
+  by itself. There is no launch test then, so the laptop watchdog's automatic rollback is the only safety net:
+  before publishing, make sure `D:\AndroidDev\releases\good.json` exists (a known-good version to roll back to)
+  and tell the owner the release wasn't tested on the phone. If the phone happens to be plugged in,
+  `build.ps1` still launch-tests first. Be extra careful with anything that runs at startup. Raise
+  `versionCode` above everything ever published (rollbacks use `published + 1`).
 - **Never re-key.** Always sign with `D:\AndroidDev\keys\release.keystore` (alias `expenselog`, password via
   `release-env.ps1`). Never create a new key and never sign with the debug key; a different signature
   forces an uninstall that wipes the app's data and permissions. Run Settings > Backup first if a
@@ -44,7 +48,10 @@ anything hard to undo, and report results honestly (what was tested on the phone
 - Only `MainActivity` is exported: reach other screens by tapping through the UI.
 - Check the phone is unlocked (`dumpsys window | grep isKeyguardShowing`) before UI tests or screenshots,
   and that the notification shade isn't open.
-- For visual changes, take screenshots (`adb exec-out screencap -p`) and look at them before publishing.
+- For visual changes, take screenshots (`adb exec-out screencap -p`) when the phone is connected; without
+  it, say the change wasn't seen on the phone and ask the owner to check it.
+- After publishing without the phone, check OneDrive `ExpenseLog/health.json` later: `ok` for the new
+  version means it started fine on the phone.
 
 ## Conventions
 

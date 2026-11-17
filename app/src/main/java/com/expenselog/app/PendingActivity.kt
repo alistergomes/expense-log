@@ -179,7 +179,6 @@ class PendingActivity : Activity() {
         ignoredBtn.visibility = if (ignoredCount > 0) View.VISIBLE else View.GONE
         selBar.visibility = if (selected.isEmpty()) View.GONE else View.VISIBLE
         syncBack()
-        findViewById<AuroraView>(R.id.aurora).setWaiting(items.isNotEmpty()) // amber while payments wait (#69)
         selAdd.text = "Add ${selected.size}"
         selIgnore.text = "Ignore ${selected.size}"
 

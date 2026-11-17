@@ -1,14 +1,15 @@
 # Builds the APK using the toolchain in D:\AndroidDev (nothing is added to the system PATH), then releases it.
 #
-# The phone installs whatever is published to OneDrive BY ITSELF (automatic updates), so a build that
-# crashes on startup would break the app with no way to fix it remotely. Therefore:
-#   - Phone on USB:  install it, launch it, and publish ONLY if it starts without crashing.
-#   - No phone:      do NOT publish, unless -PublishUntested is given deliberately.
+# The phone installs whatever is published to OneDrive BY ITSELF (automatic updates).
+# Since 2026-11-17 the owner releases without the USB cable (their choice):
+#   - No phone on USB (normal): tests + signed build, then publish straight to OneDrive. The safety net is
+#     the laptop watchdog, which rolls back a version that crashes on the phone (laptop must be on).
+#   - Phone on USB (optional):  also install it, launch it, and publish ONLY if it starts without crashing.
 #
-#   .\build.ps1 -Notes "what's new"     normal release (phone plugged in)
-#   .\build.ps1 -NoPublish              build (and USB-install if plugged in) without releasing
-#   .\build.ps1 -PublishUntested        release without a launch test (only for trivial changes)
-param([string]$Notes = "", [switch]$NoPublish, [switch]$PublishUntested)
+#   .\build.ps1 -Notes "what's new"     release
+#   .\build.ps1 -NoPublish              build (and launch-test if a phone is plugged in) without releasing
+#   .\build.ps1 -RequirePhone           refuse to publish unless the launch test ran (the old, stricter rule)
+param([string]$Notes = "", [switch]$NoPublish, [switch]$RequirePhone, [switch]$PublishUntested)
 
 . "$PSScriptRoot\release-env.ps1"   # toolchain + release key password
 $gradle = $Gradle
@@ -56,8 +57,12 @@ if ($phone) {
 
 if ($NoPublish) {
     Write-Host "Not published (-NoPublish)."
-} elseif ($tested -or $PublishUntested) {
-    if (-not $tested) { Write-Host "WARNING: publishing a build that was never launched (-PublishUntested)." }
+} elseif ($tested -or -not $RequirePhone) {
+    if (-not $tested) {
+        Write-Host "Publishing without a launch test (no phone on USB). If it crashes on the phone, the watchdog rolls it back."
+        $good = 'D:\AndroidDev\releases\good.json'
+        if (-not (Test-Path $good)) { Write-Host "WARNING: no known-good version recorded yet, so an automatic rollback isn't possible." }
+    }
     & powershell -ExecutionPolicy Bypass -File "$PSScriptRoot\publish.ps1" -Notes $Notes
     # Make sure the watchdog runs (every 15 min) so a release that fails on the phone is rolled back.
     $task = 'ExpenseLog Watchdog'
@@ -67,5 +72,5 @@ if ($NoPublish) {
         Write-Host "Scheduled the watchdog (every 15 minutes)."
     }
 } else {
-    Write-Host "NOT published: plug the phone in so the build can be launch-tested, or pass -PublishUntested."
+    Write-Host "NOT published: -RequirePhone was given but no phone is plugged in."
 }

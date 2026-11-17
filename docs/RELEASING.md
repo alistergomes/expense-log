@@ -6,7 +6,7 @@
 2. In `app/build.gradle.kts`, raise the defaults in `versionCode = ... ?: N` and `versionName = ... ?: "x.y"`.
    The version code must be higher than every version ever published (including rollbacks, which use
    `published + 1`). Check `D:\AndroidDev\releases\watch.json` for the latest.
-3. Plug the phone in (USB debugging on, screen unlocked) and run:
+3. Run (no cable needed):
 
    ```powershell
    .\build.ps1 -Notes "what changed"
@@ -18,12 +18,13 @@
 |---|---|
 | Unit tests (`testDebugUnitTest`) | any test fails |
 | Release build, signed with `D:\AndroidDev\keys\release.keystore` | the APK isn't signed with `CN=Expense Log` |
-| Install on the phone over USB | the install is refused |
-| Launch test: start the app, wait 6 s, check logcat | the app crashes or isn't running |
+| *Only if a phone is plugged in:* install over USB and launch test (start, wait 6 s, check logcat) | the install is refused, or the app crashes |
 | `publish.ps1`: upload to OneDrive `ExpenseLog/` | — |
 
-Without a phone it refuses to publish. `-PublishUntested` overrides that; only use it for trivial changes,
-because the phone installs whatever is published **by itself**. `-NoPublish` builds and launch-tests only.
+Releases normally go out **without** the launch test (the owner's choice since 2026-11-17), so the
+automatic rollback below is the safety net: keep the laptop on after publishing, and check
+`ExpenseLog/health.json` reports `ok` for the new version. `-RequirePhone` restores the strict rule
+(no publish without a launch test); `-NoPublish` builds (and launch-tests if plugged in) without releasing.
 
 ## How the phone updates itself
 

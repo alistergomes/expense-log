@@ -387,6 +387,21 @@ class Backdrop(private val host: View, private val blurDp: Float, private val le
     private val clip = Path()
     private val here = IntArray(2)
     private val there = IntArray(2)
+    private val probe = IntArray(2)
+    private var lastX = Int.MIN_VALUE
+    private var lastY = Int.MIN_VALUE
+
+    /**
+     * True when the backdrop must be redrawn before the next frame: the host moved on screen (a card in a
+     * scrolling list) or what's behind it changed (the moving background, or the list under a bar).
+     * Checked before every frame, but only causes a redraw when something really changed, so a still
+     * screen stays still (and the battery saver keeps working).
+     */
+    fun stale(): Boolean {
+        host.getLocationInWindow(probe)
+        if (probe[0] != lastX || probe[1] != lastY) return true
+        return sources.any { it !== host && it.isDirty }
+    }
     private var ok = Build.VERSION.SDK_INT >= 31
     private val node: RenderNode? = if (Build.VERSION.SDK_INT >= 31) RenderNode("backdrop") else null
 
@@ -411,6 +426,7 @@ class Backdrop(private val host: View, private val blurDp: Float, private val le
             n.setPosition(0, 0, host.width, host.height)
             val rc = n.beginRecording()
             host.getLocationInWindow(here)
+            lastX = here[0]; lastY = here[1]
             for (s in sources) {
                 if (s === host || !s.isAttachedToWindow) continue
                 s.getLocationInWindow(there)
@@ -440,8 +456,11 @@ class BlurBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, att
     private val backdrop = Backdrop(this, blurDp = 9f, lensDp = 30f)
     private val glass = GlassDrawable(GlassDrawable.Kind.BAR, Store(context).lightMode, resources.displayMetrics.density)
 
-    // Redraw when what is behind moves: scrolling, or the drifting background (see Backdrop.hosts).
-    private val redraw = ViewTreeObserver.OnScrollChangedListener { invalidate() }
+    // Redraw in the same frame as whatever is behind moves, so the glass never lags and flashes.
+    private val redraw = ViewTreeObserver.OnPreDrawListener {
+        if (backdrop.stale()) invalidate()
+        true
+    }
 
     init {
         setWillNotDraw(false)
@@ -450,12 +469,12 @@ class BlurBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, att
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        viewTreeObserver.addOnScrollChangedListener(redraw)
+        viewTreeObserver.addOnPreDrawListener(redraw)
         Backdrop.hosts += this
     }
 
     override fun onDetachedFromWindow() {
-        viewTreeObserver.removeOnScrollChangedListener(redraw)
+        viewTreeObserver.removeOnPreDrawListener(redraw)
         Backdrop.hosts -= this
         super.onDetachedFromWindow()
     }
@@ -478,7 +497,11 @@ class BlurBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, att
 class GlassCard(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     private val backdrop = Backdrop(this, blurDp = 6f, lensDp = 22f)
 
-    private val redraw = ViewTreeObserver.OnScrollChangedListener { invalidate() }
+    // Redraw in the same frame as the card moves (scrolling lists), so the glass never lags and flashes.
+    private val redraw = ViewTreeObserver.OnPreDrawListener {
+        if (backdrop.stale()) invalidate()
+        true
+    }
 
     init {
         setWillNotDraw(false)
@@ -487,12 +510,12 @@ class GlassCard(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         rootView.findViewById<View>(R.id.aurora)?.let { backdrop.sources = listOf(it) }
-        viewTreeObserver.addOnScrollChangedListener(redraw)
+        viewTreeObserver.addOnPreDrawListener(redraw)
         Backdrop.hosts += this
     }
 
     override fun onDetachedFromWindow() {
-        viewTreeObserver.removeOnScrollChangedListener(redraw)
+        viewTreeObserver.removeOnPreDrawListener(redraw)
         Backdrop.hosts -= this
         super.onDetachedFromWindow()
     }

@@ -51,6 +51,47 @@
                     android:text="Light mode" />
             </com.expenselog.app.GlassCard>
 
+            <!-- App updates -->
+            <com.expenselog.app.GlassCard
+                style="@style/Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App updates" />
+
+                <TextView
+                    android:id="@+id/updateStatus"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true" />
+
+                <Switch
+                    android:id="@+id/autoUpdateSwitch"
+                    style="@style/Toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Update automatically" />
+
+                <Button
+                    android:id="@+id/reopenBtn"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/updateBtn"
+                    style="@style/Glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check for updates" />
+            </com.expenselog.app.GlassCard>
+
             <Button
                 android:id="@+id/manageBtn"
                 style="@style/Glass"
@@ -102,47 +143,6 @@
                         android:layout_weight="1"
                         android:text="Restore" />
                 </LinearLayout>
-            </com.expenselog.app.GlassCard>
-
-            <!-- App updates -->
-            <com.expenselog.app.GlassCard
-                style="@style/Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/SectionTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="App updates" />
-
-                <TextView
-                    android:id="@+id/updateStatus"
-                    style="@style/Body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true" />
-
-                <Switch
-                    android:id="@+id/autoUpdateSwitch"
-                    style="@style/Toggle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Update automatically" />
-
-                <Button
-                    android:id="@+id/reopenBtn"
-                    style="@style/Glass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/updateBtn"
-                    style="@style/Glass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Check for updates" />
             </com.expenselog.app.GlassCard>
 
             <!-- Microsoft -->
@@ -197,7 +197,6 @@
                         style="@style/Glass"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:text="Sign out" />
                 </LinearLayout>

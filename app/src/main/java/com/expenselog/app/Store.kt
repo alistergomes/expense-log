@@ -156,6 +156,11 @@ class Store(context: Context) {
         get() = Crypto.open(p.getString("lastAdd", ""))
         set(v) = p.edit().putString("lastAdd", Crypto.seal(v)).apply()
 
+    /** Time of the newest text message a scan has already looked at; later scans start after it. */
+    var scannedUpTo: Long
+        get() = p.getLong("scannedUpTo", 0L)
+        set(v) = p.edit().putLong("scannedUpTo", v).apply()
+
     /** Appearance: dark glass unless the user switches this on. */
     var lightMode: Boolean
         get() = p.getBoolean("lightMode", false)

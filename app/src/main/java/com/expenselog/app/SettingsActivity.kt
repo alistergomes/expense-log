@@ -354,6 +354,9 @@ class SettingsActivity : Activity() {
 
     private fun showAccount() {
         account.text = if (store.isSignedIn) "Signed in." else "Not signed in."
+        // Only the button that makes sense right now.
+        findViewById<Button>(R.id.signIn).visibility = if (store.isSignedIn) View.GONE else View.VISIBLE
+        findViewById<Button>(R.id.signOut).visibility = if (store.isSignedIn) View.VISIBLE else View.GONE
     }
 
     private fun signIn() {

@@ -1,4 +1,4 @@
-﻿import java.util.Properties
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -14,8 +14,8 @@ android {
         minSdk = 26
         targetSdk = 34
         // The watchdog rebuilds an old release under a new number with -PvcOverride / -PvnOverride.
-        versionCode = (project.findProperty("vcOverride") as String?)?.toInt() ?: 38
-        versionName = (project.findProperty("vnOverride") as String?) ?: "4.3"
+        versionCode = (project.findProperty("vcOverride") as String?)?.toInt() ?: 39
+        versionName = (project.findProperty("vnOverride") as String?) ?: "4.4"
         // Personal defaults (Microsoft app ID, Excel file) come from local.properties, which is not uploaded.
         val local = Properties().apply {
             rootProject.file("local.properties").takeIf { it.exists() }?.reader(Charsets.UTF_8)?.use { load(it) }

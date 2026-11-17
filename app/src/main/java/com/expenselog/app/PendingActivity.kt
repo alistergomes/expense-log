@@ -34,6 +34,7 @@ class PendingActivity : Activity() {
     private lateinit var undoBtn: Button
     private lateinit var scanBtn: Button
     private lateinit var ignoredBtn: Button
+    private lateinit var undoIgnoreBtn: Button
     private lateinit var selBar: View
     private lateinit var selAdd: Button
     private lateinit var selIgnore: Button
@@ -117,6 +118,8 @@ class PendingActivity : Activity() {
         scanBtn.setOnClickListener { scan() }
         ignoredBtn = header.findViewById(R.id.ignoredBtn)
         ignoredBtn.setOnClickListener { showIgnored() }
+        undoIgnoreBtn = header.findViewById(R.id.undoIgnoreBtn)
+        undoIgnoreBtn.setOnClickListener { undoIgnore() }
         selBar = header.findViewById(R.id.selBar)
         selAdd = header.findViewById(R.id.selAdd)
         selIgnore = header.findViewById(R.id.selIgnore)
@@ -127,7 +130,7 @@ class PendingActivity : Activity() {
         list.addHeaderView(header, null, false)
         list.adapter = adapter
         list.layoutAnimation = LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.item_in), 0.15f)
-        Fx.pressable(back, addAll, undoBtn, scanBtn, ignoredBtn, selAdd, selIgnore)
+        Fx.pressable(back, addAll, undoBtn, undoIgnoreBtn, scanBtn, ignoredBtn, selAdd, selIgnore)
 
         val topBar = findViewById<BlurBar>(R.id.topBar)
         topBar.sources = listOf(findViewById<View>(R.id.aurora), list)
@@ -177,6 +180,10 @@ class PendingActivity : Activity() {
         val ignoredCount = IgnoredStore.all(this).size
         ignoredBtn.text = "Recently ignored ($ignoredCount)"
         ignoredBtn.visibility = if (ignoredCount > 0) View.VISIBLE else View.GONE
+        val lastIgnored = IgnoredStore.lastBatch(this)
+        undoIgnoreBtn.text = if (lastIgnored.size == 1) "Undo last ignore (${lastIgnored[0].label})"
+            else "Undo last ignore (${lastIgnored.size} payments)"
+        undoIgnoreBtn.visibility = if (lastIgnored.isNotEmpty() && busy.isEmpty()) View.VISIBLE else View.GONE
         selBar.visibility = if (selected.isEmpty()) View.GONE else View.VISIBLE
         syncBack()
         selAdd.text = "Add ${selected.size}"
@@ -323,6 +330,15 @@ class PendingActivity : Activity() {
             .show()
     }
 
+    /** Puts the last ignored card (or the group ignored together) back in the list. */
+    private fun undoIgnore() {
+        val back = IgnoredStore.lastBatch(this)
+        if (back.isEmpty()) return
+        back.forEach { IgnoredStore.restore(this, it.id) }
+        message = if (back.size == 1) "Restored ${back[0].label}." else "Restored ${back.size} payments."
+        reload()
+    }
+
     // ----- adding -----
 
     private fun notReady(): Boolean {
@@ -450,7 +466,7 @@ class PendingActivity : Activity() {
                 scanBtn.isEnabled = true
                 message = r.fold(
                     { res ->
-                        "Scanned ${res.scanned} messages: ${res.payments} payment texts, ${res.alreadyLogged} already in your sheet or this list. " +
+                        "Scanned ${res.scanned} new messages (ones checked by an earlier scan were skipped):${res.payments} payment texts, ${res.alreadyLogged} already in your sheet or this list. " +
                             if (res.added == 0) "Nothing missed." else "Added ${res.added} missed payment" + (if (res.added == 1) "" else "s") + " below."
                     },
                     { e -> "Scan failed: ${e.message ?: e.javaClass.simpleName}" }

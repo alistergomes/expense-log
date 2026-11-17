@@ -33,64 +33,6 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/voiceBtn"
-                    style="@style/Pill"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_weight="1"
-                    android:text="🎤  Say it" />
-
-                <Button
-                    android:id="@+id/receiptBtn"
-                    style="@style/Pill"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:text="📷  Receipt" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/sheetBtn"
-                    style="@style/Pill"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_weight="1"
-                    android:text="📄  Sheet" />
-
-                <Button
-                    android:id="@+id/totalsBtn"
-                    style="@style/Pill"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:text="📊  Totals" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/undoBtn"
-                style="@style/Pill"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:minHeight="48dp"
-                android:textColor="@color/danger"
-                android:visibility="gone" />
-
             <Button
                 android:id="@+id/pendingBtn"
                 style="@style/Pill"
@@ -221,6 +163,55 @@
                 android:tag="card"
                 android:textIsSelectable="true"
                 android:visibility="gone" />
+
+            <!-- Shortcuts, at the bottom just above Add to Excel. -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/voiceBtn"
+                    style="@style/Pill"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="🎤  Say it" />
+
+                <Button
+                    android:id="@+id/receiptBtn"
+                    style="@style/Pill"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="📷  Receipt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/sheetBtn"
+                    style="@style/Pill"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="📄  Sheet" />
+
+                <Button
+                    android:id="@+id/totalsBtn"
+                    style="@style/Pill"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="📊  Totals" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

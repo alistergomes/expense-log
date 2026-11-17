@@ -164,7 +164,9 @@ object InboxScanner {
     /** Blocking. Needs READ_SMS and a connection (it reads the sheet to skip what is already there). */
     fun scan(c: Context, days: Int): Result {
         val store = Store(c)
-        val since = System.currentTimeMillis() - days * 24L * 60 * 60 * 1000
+        // Messages an earlier scan already looked at are skipped (so ignored ones don't come back).
+        val since = maxOf(System.currentTimeMillis() - days * 24L * 60 * 60 * 1000, store.scannedUpTo + 1)
+        var newest = store.scannedUpTo
         val rows = Graph.readRows(store)
         PendingStore.removeRepeats(c) // tidy up repeats an earlier scan may have added
         // Re-read entries an earlier scan added, with today's rules: drop what is no longer a payment, fix the rest.
@@ -184,6 +186,7 @@ object InboxScanner {
         )?.use { cur ->
             while (cur.moveToNext()) {
                 scanned++
+                newest = maxOf(newest, cur.getLong(2))
                 val from = cur.getString(0).orEmpty()
                 val body = cur.getString(1).orEmpty()
                 val received = java.time.Instant.ofEpochMilli(cur.getLong(2)).atZone(ZoneId.systemDefault()).toLocalDateTime()
@@ -204,6 +207,7 @@ object InboxScanner {
                 Thread.sleep(2) // distinct ids
             }
         }
+        store.scannedUpTo = newest // only after the whole scan worked
         return Result(scanned, payments, logged, added)
     }
 }

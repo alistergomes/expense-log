@@ -124,6 +124,13 @@ object IgnoredStore {
         save(c, all(c).filter { it.second.id != id })
     }
 
+    /** The last ignore (one card, or several ignored together), or empty when there is none. */
+    fun lastBatch(c: Context): List<Pending> {
+        val all = all(c)
+        val newest = all.firstOrNull()?.first ?: return emptyList()
+        return all.filter { newest - it.first < 3000 }.map { it.second }
+    }
+
     private fun save(c: Context, items: List<Pair<Long, Pending>>) {
         val arr = JSONArray()
         items.take(300).forEach { arr.put(JSONObject().put("at", it.first).put("p", it.second.toJson())) }

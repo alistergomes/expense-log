@@ -51,6 +51,15 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/undoIgnoreBtn"
+        style="@style/Pill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="46dp"
+        android:visibility="gone" />
+
+    <Button
         android:id="@+id/ignoredBtn"
         style="@style/Pill"
         android:layout_width="match_parent"

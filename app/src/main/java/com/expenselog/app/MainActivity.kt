@@ -33,7 +33,6 @@ class MainActivity : Activity() {
     private lateinit var progress: ProgressBar
     private lateinit var status: TextView
     private lateinit var pendingBtn: Button
-    private lateinit var undoBtn: Button
 
     private var light = false
     private var at: LocalDateTime = LocalDateTime.now().withSecond(0).withNano(0)
@@ -76,7 +75,6 @@ class MainActivity : Activity() {
         progress = findViewById(R.id.progress)
         status = findViewById(R.id.status)
         pendingBtn = findViewById(R.id.pendingBtn)
-        undoBtn = findViewById(R.id.undoBtn)
         val btnDetected = findViewById<Button>(R.id.btnDetected)
         val btnSettings = findViewById<Button>(R.id.btnSettings)
 
@@ -113,7 +111,6 @@ class MainActivity : Activity() {
         }
 
         submit.setOnClickListener { submit(checkDuplicate = true) }
-        undoBtn.setOnClickListener { undo() }
         // Something typed but not added yet: an automatic update waits until the form is empty.
         val draftWatcher = object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
@@ -134,7 +131,7 @@ class MainActivity : Activity() {
         val totalsBtn = findViewById<Button>(R.id.totalsBtn)
         sheetBtn.setOnClickListener { startActivity(Intent(this, SheetActivity::class.java)) }
         totalsBtn.setOnClickListener { startActivity(Intent(this, TotalsActivity::class.java)) }
-        Fx.pressable(submit, btnDetected, btnSettings, pendingBtn, undoBtn, voiceBtn, receiptBtn, sheetBtn, totalsBtn)
+        Fx.pressable(submit, btnDetected, btnSettings, pendingBtn, voiceBtn, receiptBtn, sheetBtn, totalsBtn)
 
         if (savedInstanceState == null) {
             prefill(intent)
@@ -312,9 +309,6 @@ class MainActivity : Activity() {
         } else if (!show) {
             pendingBtn.visibility = View.GONE
         }
-        val undo = Ledger.undoLabel(store)
-        undoBtn.text = "Undo last add ($undo)"
-        undoBtn.visibility = if (undo != null && pending == null) View.VISIBLE else View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -433,26 +427,6 @@ class MainActivity : Activity() {
         showDate()
         amountView.requestFocus()
         refreshHeader()
-    }
-
-    private fun undo() {
-        val what = Ledger.undoLabel(store) ?: return
-        AlertDialog.Builder(this)
-            .setTitle("Undo last add?")
-            .setMessage("This deletes $what from the sheet and puts the payment back in Detected.")
-            .setPositiveButton("Undo") { _, _ ->
-                undoBtn.isEnabled = false
-                thread {
-                    val msg = runCatching { Ledger.undo(this) }.getOrElse { "Undo failed. ${it.message}" }
-                    runOnUiThread {
-                        undoBtn.isEnabled = true
-                        setStatus(msg)
-                        refreshHeader()
-                    }
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
     }
 
     private fun setBusy(busy: Boolean) {
